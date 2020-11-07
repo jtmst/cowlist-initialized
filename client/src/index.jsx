@@ -14,6 +14,7 @@ class App extends React.Component {
       },
     };
     this.selectCow = this.selectCow.bind(this);
+    this.addCow = this.addCow.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,23 @@ class App extends React.Component {
     this.setState({ selectedCow: cow });
   }
 
+  addCow(cow) {
+    // console.log(cow);
+    fetch('/cows', {
+      method: 'POST',
+      body: JSON.stringify(cow),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(() => {
+        console.log(`${cow} added`);
+      })
+      .catch((err) => {
+        console.log('error posting cow, ', err);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -50,7 +68,7 @@ class App extends React.Component {
           <p>{this.state.selectedCow.description}</p>
         </div>
         <CowTable cows={this.state.cows} selectCow={this.selectCow} />
-        <AddCow />
+        <AddCow addCow={this.addCow} />
       </div>
     );
   }
