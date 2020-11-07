@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CowTable from './CowTable.jsx';
+import AddCow from './AddCow.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,10 +9,11 @@ class App extends React.Component {
     this.state = {
       cows: [],
       selectedCow: {
-        name: 'lulu',
+        name: null,
         description: null,
       },
     };
+    this.selectCow = this.selectCow.bind(this);
   }
 
   componentDidMount() {
@@ -24,9 +26,7 @@ class App extends React.Component {
           {
             cows: response,
           },
-          () => {
-            // console.log(this.state.cows);
-          }
+          () => {}
         );
       })
       .catch((err) => {
@@ -34,13 +34,23 @@ class App extends React.Component {
       });
   }
 
+  selectCow(cow) {
+    this.setState({ selectedCow: cow });
+  }
+
   render() {
     return (
       <div>
         <h1>cow list</h1>
-        <div>{this.state.selectedCow.name}</div>
-        <div>{this.state.selectedCow.description}</div>
-        <CowTable cows={this.state.cows} />
+        <div
+          class="selectedCow"
+          style={{ position: 'absolute', left: '50%', top: '20%' }}
+        >
+          <h3>{this.state.selectedCow.name}</h3>
+          <p>{this.state.selectedCow.description}</p>
+        </div>
+        <CowTable cows={this.state.cows} selectCow={this.selectCow} />
+        <AddCow />
       </div>
     );
   }

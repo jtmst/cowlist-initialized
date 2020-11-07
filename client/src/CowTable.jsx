@@ -7,7 +7,15 @@ const CowTable = function (props) {
   return (
     <div>
       {props.cows.map((cow) => {
-        return <li>{cow.name}</li>;
+        return (
+          <li
+            onClick={() => {
+              props.selectCow(cow);
+            }}
+          >
+            {cow.name}
+          </li>
+        );
       })}
     </div>
   );

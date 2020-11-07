@@ -47,11 +47,6 @@ let retrieveCows = () => {
 
 Cow.sync({ alter: true })
 
-// module.exports = sequelize;
-// module.exports.cow = Cow;
-// module.exports.createCow = createCow;
-// module.exports.retrieveCows = retrieveCows;
-
 module.exports = {
     sequelize,
     createCow,
