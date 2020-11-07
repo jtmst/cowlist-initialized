@@ -6,26 +6,41 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCow: {
-        name: 'Milkshake',
-        description: 'loves milk',
+      cows: [],
+      selectedCow: {
+        name: 'lulu',
+        description: null,
       },
     };
   }
 
   componentDidMount() {
-    fetch('/cows').then((results) => {
-      console.log(results);
-    });
+    fetch('/cows')
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        this.setState(
+          {
+            cows: response,
+          },
+          () => {
+            // console.log(this.state.cows);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
     return (
       <div>
         <h1>cow list</h1>
-        <div>{this.state.currentCow.name}</div>
-        <div>{this.state.currentCow.description}</div>
-        {/* <CowTable cowList={this.state.cowList} /> */}
+        <div>{this.state.selectedCow.name}</div>
+        <div>{this.state.selectedCow.description}</div>
+        <CowTable cows={this.state.cows} />
       </div>
     );
   }
